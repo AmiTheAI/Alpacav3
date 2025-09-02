@@ -1,9 +1,6 @@
+// /public/script.js
 
-import dotenv from "dotenv"
-dotenv.config()
-// frontend/script.js
-
-const BACKEND_URL = ''; 
+const BACKEND_URL = "https://YOUR-DEPLOYMENT.vercel.app"; 
 
 document.getElementById('send-button').addEventListener('click', async () => {
     const promptInput = document.getElementById('prompt-input');
@@ -15,12 +12,10 @@ document.getElementById('send-button').addEventListener('click', async () => {
     responseDiv.textContent = 'Thinking...';
 
     try {
-        const response = await fetch(`${BACKEND_URL}/api/chat`, {
+        const response = await fetch(`${BACKEND_URL}/api`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ prompt }), // <-- CORRECT KEY!
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt }), // matches backend
         });
 
         if (!response.ok) {
@@ -28,7 +23,7 @@ document.getElementById('send-button').addEventListener('click', async () => {
         }
 
         const data = await response.json();
-        responseDiv.textContent = data.message; // <-- CORRECT KEY!
+        responseDiv.textContent = data.message; // matches backend
     } catch (error) {
         console.error('Error:', error);
         responseDiv.textContent = 'Error: Could not connect to the server.';
